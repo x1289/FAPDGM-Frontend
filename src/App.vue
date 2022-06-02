@@ -1,25 +1,75 @@
-<script setup>
+<script>
 import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
+import BlockchainInfoDisplay from "./components/BlockchainInfoDisplay.vue";
+import BlockDisplay from "./components/BlockDisplay.vue";
+import ChainTXStatsDisplay from "./components/ChainTXStatsDisplay.vue";
+import MempoolInfoDisplay from "./components/MempoolInfoDisplay.vue";
+import UptimeDisplay from "./components/UptimeDisplay.vue";
+import PriceDisplay from "./components/PriceDisplay.vue";
+
+export default {
+  components: {
+    HelloWorld,
+    BlockchainInfoDisplay,
+    BlockDisplay,
+    ChainTXStatsDisplay,
+    MempoolInfoDisplay,
+    UptimeDisplay,
+    PriceDisplay,
+  },
+  data() {
+    return {
+      jsonData: undefined,
+    };
+  },
+  mounted() {
+    this.requestInterval = setInterval(() => {
+      this.getJSONData();
+    }, 1000);
+  },
+  methods: {
+    async getJSONData() {
+      fetch(
+        `http://${import.meta.env.VITE_SERVER_URL}:${
+          import.meta.env.VITE_SERVER_PORT
+        }/`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => {
+          return response.text();
+        })
+        .then((data) => {
+          this.jsonData = JSON.parse(data);
+          console.log(
+            "request data from server successfull.",
+            JSON.parse(data)
+          );
+        });
+    },
+  },
+};
 </script>
 
 <template>
   <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="./assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="Bitcoin Stats" />
     </div>
   </header>
 
   <main>
-    <TheWelcome />
+    <BlockchainInfoDisplay :data="jsonData?.blockchaininfo" />
+    <BlockDisplay :data="jsonData?.block" />
+    <ChainTXStatsDisplay :data="jsonData?.chaintxstats" />
+    <MempoolInfoDisplay :data="jsonData?.mempoolinfo" />
+    <UptimeDisplay :data="jsonData?.uptime" />
+    <PriceDisplay :data="jsonData?.price" />
   </main>
 </template>
 
