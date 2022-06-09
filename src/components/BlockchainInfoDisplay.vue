@@ -7,9 +7,36 @@ export default {
 </script>
 
 <template>
-  <h2>blockchaininfo</h2>
-  {{ data }}
-  <br /><br />
+  <h2>Blockchain Daten:</h2>
+
+  <p v-if="data?.blocks !== undefined">
+    Anzahl der Blöcke insgesamt:
+    <span class="important">{{ data.blocks }} Blöcke</span>
+  </p>
+  <p v-if="data?.difficulty !== undefined">
+    Schwierigkeit:
+    <span class="important">{{ data.difficulty }}</span>
+  </p>
+  <p v-if="data?.verificationprogress !== undefined">
+    Syncronisationsstatus:
+    <span class="important">
+      {{ Number.parseFloat(data.verificationprogress).toFixed(10) * 100 }} %
+    </span>
+  </p>
+  <p v-if="data?.sizeondisk !== undefined">
+    Speicherbedarf:
+    <span class="important">
+      {{
+        (Number.parseFloat(data.sizeondisk) / (1024 * 1024 * 1024)).toFixed(3)
+      }}
+      GB
+    </span>
+  </p>
+  <p v-if="data?.bestblockhash !== undefined">
+    Aktueller Blockhash:
+    <span class="important"> "{{ data.bestblockhash }}" </span>
+  </p>
+  <br />
 </template>
 
 <style>
@@ -30,13 +57,6 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
 }
 
 @media (hover: hover) {

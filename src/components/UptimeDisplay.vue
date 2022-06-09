@@ -1,6 +1,6 @@
 <template>
-  <h2>uptime</h2>
-  {{ toTime() }}
+  <h2>Laufzeit:</h2>
+  <span class="important">{{ toTime() }}</span>
   <br /><br />
 </template>
 
@@ -17,20 +17,20 @@ export default {
       const seconds =
         this.data - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60;
       let result = "";
-      if (days > 0) result += days + " days";
+      if (days > 0) result += days + " Tage";
       if (hours > 0) {
         if (result !== "") result += ", ";
-        result += hours + " hour";
+        result += hours + " Stunden";
         if (hours > 1) result += "s";
       }
       if (minutes > 0) {
         if (result !== "") result += ", ";
-        result += minutes + " minute";
+        result += minutes + " Minuten";
         if (minutes > 1) result += "s";
       }
       if (seconds > 0) {
         if (result !== "") result += ", ";
-        result += seconds + " second";
+        result += seconds + " Sekunden";
         if (seconds > 1) result += "s";
       }
       return result;
@@ -67,13 +67,6 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
 }
 
 @media (hover: hover) {

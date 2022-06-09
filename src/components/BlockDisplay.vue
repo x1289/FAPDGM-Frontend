@@ -7,9 +7,29 @@ export default {
 </script>
 
 <template>
-  <h2>block</h2>
-  {{ data }}
-  <br /><br />
+  <h2>Aktueller Block:</h2>
+  <p v-if="data?.confirmations !== undefined">
+    Bestätigungen: <span class="important"> {{ data.confirmations }}</span>
+  </p>
+  <p v-if="data?.size !== undefined">
+    Blockgröße:
+    <span class="important">
+      {{ Number.parseFloat(data.size / (1024 * 1024)).toFixed(3) }} MB
+    </span>
+  </p>
+  <p v-if="data?.merkleroot !== undefined">
+    Merkle-Wurzel:
+    <span class="important"> "{{ data.merkleroot }}"</span>
+  </p>
+  <p v-if="data?.nonce !== undefined">
+    Nonce:
+    <span class="important"> {{ data.nonce }}</span>
+  </p>
+  <p v-if="data?.nTx !== undefined">
+    Anzahl der Transaktionen:
+    <span class="important"> {{ data.nTx }}</span>
+  </p>
+  <br />
 </template>
 
 <style>
@@ -30,13 +50,6 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
 }
 
 @media (hover: hover) {

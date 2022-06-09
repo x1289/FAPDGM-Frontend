@@ -1,3 +1,20 @@
+<template>
+  <h2>Memory Pool Info</h2>
+  <p v-if="data?.size !== undefined">
+    Anzahl der Transaktionen: <span class="important">{{ data.size }}</span>
+  </p>
+  <p v-if="data?.bytes !== undefined">
+    Größe in Bytes: <span class="important">{{ data.bytes }}</span>
+  </p>
+  <p v-if="data?.minfee !== undefined">
+    Minimale Gebühr: <span class="important">{{ data.minfee }}</span>
+  </p>
+  <p v-if="data?.totalfee !== undefined">
+    Gebühren Gesamt: <span class="important">{{ data.totalfee }}</span>
+  </p>
+  <br />
+</template>
+
 <script>
 export default {
   props: {
@@ -5,12 +22,6 @@ export default {
   },
 };
 </script>
-
-<template>
-  <h2>mempoolinfo</h2>
-  {{ data }}
-  <br /><br />
-</template>
 
 <style>
 @import "../assets/base.css";
@@ -30,13 +41,6 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
 }
 
 @media (hover: hover) {

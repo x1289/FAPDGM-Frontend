@@ -23,9 +23,10 @@ export default {
     };
   },
   mounted() {
+    this.getJSONData();
     this.requestInterval = setInterval(() => {
       this.getJSONData();
-    }, 1000);
+    }, 3000);
   },
   methods: {
     async getJSONData() {
@@ -46,10 +47,6 @@ export default {
         })
         .then((data) => {
           this.jsonData = JSON.parse(data);
-          console.log(
-            "request data from server successfull.",
-            JSON.parse(data)
-          );
         });
     },
   },
@@ -59,7 +56,7 @@ export default {
 <template>
   <header>
     <div class="wrapper">
-      <HelloWorld msg="Bitcoin Stats" />
+      <HelloWorld msg="Bitcoin Daten" />
     </div>
   </header>
 
@@ -94,9 +91,9 @@ header {
 }
 
 a,
-.green {
+.orange {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: #f7931a;
   transition: 0.4s;
 }
 
