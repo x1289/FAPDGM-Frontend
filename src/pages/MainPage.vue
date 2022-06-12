@@ -1,49 +1,37 @@
 <template>
-  <header>
-    <div class="wrapper">
-      <h1 class="orange">Bitcoin Daten</h1>
-      <div id="navigation">
-        <a href="#/">
-          <i class="bi bi-house-fill fs-5"></i>
-          <span>Home</span>
-        </a>
-        <a href="#/api-doc">
-          <i class="bi-book fs-5"></i>
-          <span>API Doc</span>
-        </a>
-      </div>
-    </div>
-  </header>
-
   <main>
-    <component :is="currentView" />
+    <BlockchainInfoDisplay :data="jsonData?.blockchaininfo" />
+    <BlockDisplay :data="jsonData?.block" />
+    <ChainTXStatsDisplay :data="jsonData?.chaintxstats" />
+    <MempoolInfoDisplay :data="jsonData?.mempoolinfo" />
+    <UptimeDisplay :data="jsonData?.uptime" />
+    <PriceDisplay :data="jsonData?.price" />
   </main>
 </template>
 
 <script>
-import MainPage from "./pages/MainPage.vue";
-import APIDoc from "./pages/APIDoc.vue";
-
-const routes = {
-  "/": MainPage,
-  "/api-doc": APIDoc,
-};
+import BlockchainInfoDisplay from "../components/BlockchainInfoDisplay.vue";
+import BlockDisplay from "../components/BlockDisplay.vue";
+import ChainTXStatsDisplay from "../components/ChainTXStatsDisplay.vue";
+import MempoolInfoDisplay from "../components/MempoolInfoDisplay.vue";
+import UptimeDisplay from "../components/UptimeDisplay.vue";
+import PriceDisplay from "../components/PriceDisplay.vue";
 
 export default {
+  components: {
+    BlockchainInfoDisplay,
+    BlockDisplay,
+    ChainTXStatsDisplay,
+    MempoolInfoDisplay,
+    UptimeDisplay,
+    PriceDisplay,
+  },
   data() {
     return {
-      currentPath: window.location.hash,
+      jsonData: undefined,
     };
   },
-  computed: {
-    currentView() {
-      return routes[this.currentPath.slice(1) || "/"] || "MainPage";
-    },
-  },
   mounted() {
-    window.addEventListener("hashchange", () => {
-      this.currentPath = window.location.hash;
-    });
     this.getJSONData();
     this.requestInterval = setInterval(() => {
       this.getJSONData();
@@ -75,7 +63,7 @@ export default {
 </script>
 
 <style>
-@import "./assets/base.css";
+@import "../assets/base.css";
 
 #app {
   max-width: 1280px;
@@ -127,31 +115,12 @@ a,
 
   header .wrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    place-items: flex-start;
     flex-wrap: wrap;
   }
 
   .logo {
     margin: 0 2rem 0 0;
   }
-}
-
-#navigation a {
-  padding: 5px 15px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-#navigation a i {
-  padding-right: 10px;
-}
-
-.btn-primary {
-  background-color: #f7931a;
-  border-color: #f7931a;
 }
 </style>
